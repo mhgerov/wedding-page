@@ -13,11 +13,11 @@
     <int-http:inbound-gateway
             id="httpIndexGateway"
             request-channel="httpIndexChannel"
-            path="/users/{user}"
-            payload-expression=""
+            path="/registry"
+            view-name="registry"
     />
     <int:channel id="httpIndexChannel"/>
-    <int:transformer input-channel="httpIndexChannel" expression="'index'"/>
+    <int:transformer input-channel="httpIndexChannel" expression="'asdf'"/>
 
 
 </beans>
