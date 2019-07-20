@@ -1,0 +1,5 @@
+---
+applications:
+  - name: mizzy-wedding
+    memory: 512M
+    buildpacks: [java_buildpack]
