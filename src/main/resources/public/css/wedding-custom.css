@@ -1,5 +1,17 @@
 .registry-card {
     margin: 10px;
     display: inline-block;
-    background: #aaa;
+    background: white;
+}
+
+.registry-card h5 {
+    font-size: 20px;
+}
+
+.probootstrap-section.probootstrap-section-colored-darker .registry-card p {
+    color: #8b8e94;
+}
+
+.registry-card-text {
+    color: #8b8e94;
 }
