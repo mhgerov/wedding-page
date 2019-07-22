@@ -2,6 +2,7 @@
     margin: 10px;
     display: inline-block;
     background: white;
+    width: 12rem;
 }
 
 .registry-card h5 {
@@ -14,4 +15,8 @@
 
 .registry-card-text {
     color: #8b8e94;
+}
+
+.registry-cost {
+    margin-bottom:0px;
 }
