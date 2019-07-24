@@ -14,40 +14,39 @@
     </div>
 </div>
     */
-var cat = {
+var registryItems = [{
     title: "A THIRD Cat!!",
     imgSrc: "registry_cat.jpg",
     subText: "Kitty & Beaker need a new friend",
     cost: 500.0,
     progress: 301.25
-};
+}];
 
-var card = document.createElement("div");
-$(card).addClass("thumbnail registry-card")
+function generateRegistry(registryArray) {
+    for (var i=0; i<registryArray.length; i++) {
+        var card = $("<div></div>").addClass("thumbnail registry-card");
+        var img = document.createElement("img");
+        $(img).attr({
+            src: "img/" + registryArray[i].imgSrc,
+            class: "card-img-top img-rounded",
+            style: "width: 100%"
+        })
+        var caption = $("<div></div>").addClass("caption");
+        var h5 = $("<h5></h5>").text(registryArray[i].title);
+        var subText = $("<p></p>").text(registryArray[i].subText);
+        var cost = $("<p></p>").addClass("registry-cost").text("$"+registryArray[i].cost);
+        var progress = $("<div></div>").addClass("progress")
+        var progressBar = $("<div></div>")
+            .addClass("progress-bar")
+            .attr("style","width:"+(100*registryArray[i].progress/registryArray[i].cost).toFixed(2)+"%")
+            .text("$"+(registryArray[i].progress).toFixed(2));
 
-var img = document.createElement("img");
-var imgSrc = "img/" + cat.imgSrc;
-$(img).attr({
-    src: imgSrc,
-    class: "card-img-top img-rounded",
-    style: "width: 100%"
-})
+        $(progress).append(progressBar);
+        $(caption).append(h5,subText,progress,cost);
+        $(card).append(img).append(caption);
+        $("#registry-container").append(card);
 
-var caption = document.createElement("div");
-$(caption).addClass("caption");
-var h5 = $("<h5></h5>").text(cat.title);
-$(caption).append(h5);
-var subText = $("<p></p>").text(cat.subText);
-$(caption).append(subText);
-var cost = $("<p></p>").addClass("registry-cost").text("$"+cat.cost);
-$(caption).append(cost);
+    }
+}
 
-var progress = $("<div></div>").addClass("progress")
-var percent = cat.progress/cat.cost;
-var progressBar = $("<div></div>").addClass("progress-bar").attr("style","width:"+100*percent.toFixed(2)+"%");
-
-$(progress).append(progressBar);
-$(caption).append(progress);
-$(card).append(img);
-$(card).append(caption);
-$("#registry-container").append(card);
+generateRegistry(registryItems);
