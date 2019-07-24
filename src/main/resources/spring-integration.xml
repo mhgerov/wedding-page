@@ -13,11 +13,17 @@
     <int-http:inbound-gateway
             id="httpIndexGateway"
             request-channel="httpIndexChannel"
-            path="/registry"
-            view-name="registry"
+            path="/"
+            view-name="index"
     />
-    <int:channel id="httpIndexChannel"/>
-    <int:transformer input-channel="httpIndexChannel" expression="'asdf'"/>
+    <int:channel id="httpIndexChannel">
+       <int:interceptors>
+           <int:wire-tap channel="fullLogger"/>
+       </int:interceptors>
+    </int:channel>
+    <int:transformer input-channel="httpIndexChannel" ref="testPayloadTransformer" />
+
+    <int:logging-channel-adapter id="fullLogger" level="DEBUG" log-full-message="true"/>
 
 
 </beans>

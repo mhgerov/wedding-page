@@ -49,27 +49,3 @@ function generateRegistry(registryArray) {
     }
 }
 
-// generateRegistry(registryItems);
-/*
-<
-div
-class
-= "thumbnail registry-card" > < img
-src = "img/registry_cat.jpg"
-class
-= "card-img-top img-rounded hoverZoomLink"
-style = "width: 100%" > < div
-class
-= "caption" > < h5 > A
-THIRD
-Cat
-!! < /h5><p>Kitty &amp; Beaker need a new friend</
-p > < p
-class
-= "registry-cost" > $500 < /p><div class="progress"><div class="progress-bar" style="width:60.25%">$301.25</
-div > < /div></
-div > < button
-class
-= "btn btn-primary"
-type = "button" > Donate < /button></
-div >*/

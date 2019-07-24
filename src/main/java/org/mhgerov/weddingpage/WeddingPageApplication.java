@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @SpringBootApplication
-//@ImportResource("classpath:spring-integration.xml")
+@ImportResource("classpath:spring-integration.xml")
 public class WeddingPageApplication {
 
     public static void main(String[] args) {
