@@ -23,7 +23,7 @@ var registryItems = [{
 }];
 
 function generateRegistry(registryArray) {
-    for (var i=0; i<registryArray.length; i++) {
+    for (var i = 0; i < registryArray.length; i++) {
         var card = $("<div></div>").addClass("thumbnail registry-card");
         var img = document.createElement("img");
         $(img).attr({
@@ -34,19 +34,42 @@ function generateRegistry(registryArray) {
         var caption = $("<div></div>").addClass("caption");
         var h5 = $("<h5></h5>").text(registryArray[i].title);
         var subText = $("<p></p>").text(registryArray[i].subText);
-        var cost = $("<p></p>").addClass("registry-cost").text("$"+registryArray[i].cost);
+        var cost = $("<p></p>").addClass("registry-cost").text("$" + registryArray[i].cost);
         var progress = $("<div></div>").addClass("progress")
         var progressBar = $("<div></div>")
             .addClass("progress-bar")
-            .attr("style","width:"+(100*registryArray[i].progress/registryArray[i].cost).toFixed(2)+"%")
-            .text("$"+(registryArray[i].progress).toFixed(2));
-
+            .attr("style", "width:" + (100 * registryArray[i].progress / registryArray[i].cost).toFixed(2) + "%")
+            .text("$" + (registryArray[i].progress).toFixed(2));
         $(progress).append(progressBar);
-        $(caption).append(h5,subText,progress,cost);
-        $(card).append(img).append(caption);
+        var button = $("<button></button>").addClass("btn btn-primary").attr("type", "button").text("Donate");
+        $(caption).append(h5, subText, cost, progress);
+        $(card).append(img, caption, button);
         $("#registry-container").append(card);
 
     }
 }
 
-generateRegistry(registryItems);
+// generateRegistry(registryItems);
+/*
+<
+div
+class
+= "thumbnail registry-card" > < img
+src = "img/registry_cat.jpg"
+class
+= "card-img-top img-rounded hoverZoomLink"
+style = "width: 100%" > < div
+class
+= "caption" > < h5 > A
+THIRD
+Cat
+!! < /h5><p>Kitty &amp; Beaker need a new friend</
+p > < p
+class
+= "registry-cost" > $500 < /p><div class="progress"><div class="progress-bar" style="width:60.25%">$301.25</
+div > < /div></
+div > < button
+class
+= "btn btn-primary"
+type = "button" > Donate < /button></
+div >*/

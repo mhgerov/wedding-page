@@ -58,7 +58,6 @@
     <ul class="slides">
         <li style="background-image: url(img/hero_1.jpg)"></li>
         <li style="background-image: url(img/hero_2.jpg)"></li>
-        <li style="background-image: url(img/hero_bg_3.jpg)"></li>
     </ul>
 </section>
 
@@ -322,8 +321,21 @@
         </div>
         <div class="row">
             <div class="col-md-12" id="registry-container"></div>
+            {{#registryList}}
+                <div class="thumbnail registry-card">
+                   <img src="img/{{imgSrc}}" class="img-rounded img-responsive" />
+                    <div class="caption">
+                        <h5>{{title}}</h5>
+                        <p>{{subText}}</p>
+                        <p class="registry-cost">{{costF}}</p>
+                        <div class="progress">
+                            <div class="progress-bar" style="width:{{percentageF}}">{{progressF}}</div>
+                        </div>
+                        <button class="btn btn-primary" type="button">Donate</button>
+                    </div>
+                </div>
+            {{/registryList}}
         </div>
-    </div>
     </div>
 </section>
 
