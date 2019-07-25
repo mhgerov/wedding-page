@@ -1,6 +1,7 @@
 package org.mhgerov.weddingpage.orm;
 
 public class RegistryItem {
+
     public String imgSrc;
     public String title;
     public String subText;

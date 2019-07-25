@@ -17,11 +17,9 @@
             view-name="index"
     />
     <channel id="httpIndexChannel">
-        <!--
-       <interceptors>
+        <!--<interceptors>
            <wire-tap channel="fullLogger"/>
-       </interceptors>
--->
+       </interceptors>-->
     </channel>
     <transformer id="startModelTransformer" expression="new java.util.HashMap()" input-channel="httpIndexChannel" output-channel="testTransformerChannel"/>
     <channel id="testTransformerChannel"/>
