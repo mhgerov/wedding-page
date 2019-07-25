@@ -15,11 +15,5 @@ public class WeddingPageApplication {
         SpringApplication.run(WeddingPageApplication.class, args);
     }
 
-    @Controller
-    public class RootController {
-
-
-
-    }
 
 }

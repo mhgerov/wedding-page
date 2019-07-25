@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:int="http://www.springframework.org/schema/integration"
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+       xmlns="http://www.springframework.org/schema/integration"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:int-http="http://www.springframework.org/schema/integration/http"
+       xmlns:http="http://www.springframework.org/schema/integration/http"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/integration
@@ -10,20 +10,24 @@
             http://www.springframework.org/schema/integration/http
             https://www.springframework.org/schema/integration/http/spring-integration-http.xsd">
 
-    <int-http:inbound-gateway
+    <http:inbound-gateway
             id="httpIndexGateway"
             request-channel="httpIndexChannel"
             path="/"
             view-name="index"
     />
-    <int:channel id="httpIndexChannel">
-       <int:interceptors>
-           <int:wire-tap channel="fullLogger"/>
-       </int:interceptors>
-    </int:channel>
-    <int:transformer input-channel="httpIndexChannel" ref="testPayloadTransformer" />
+    <channel id="httpIndexChannel">
+        <!--
+       <interceptors>
+           <wire-tap channel="fullLogger"/>
+       </interceptors>
+-->
+    </channel>
+    <transformer id="startModelTransformer" expression="new java.util.HashMap()" input-channel="httpIndexChannel" output-channel="testTransformerChannel"/>
+    <channel id="testTransformerChannel"/>
+    <transformer id="insertRegistryItemsTransformer" input-channel="testTransformerChannel" ref="registryItemsEnricher"/>
 
-    <int:logging-channel-adapter id="fullLogger" level="DEBUG" log-full-message="true"/>
+<!--    <logging-channel-adapter id="fullLogger" level="DEBUG" log-full-message="true"/>-->
 
 
-</beans>
+</beans:beans>

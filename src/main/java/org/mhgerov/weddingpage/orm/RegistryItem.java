@@ -1,4 +1,4 @@
-package org.mhgerov.weddingpage;
+package org.mhgerov.weddingpage.orm;
 
 public class RegistryItem {
     public String imgSrc;
