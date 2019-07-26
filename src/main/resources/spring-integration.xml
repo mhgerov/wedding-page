@@ -3,29 +3,55 @@
        xmlns="http://www.springframework.org/schema/integration"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:http="http://www.springframework.org/schema/integration/http"
+       xmlns:mongo="http://www.springframework.org/schema/integration/mongodb"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/integration
             https://www.springframework.org/schema/integration/spring-integration.xsd
             http://www.springframework.org/schema/integration/http
-            https://www.springframework.org/schema/integration/http/spring-integration-http.xsd">
-
+            https://www.springframework.org/schema/integration/http/spring-integration-http.xsd
+            http://www.springframework.org/schema/integration/mongodb
+            https://www.springframework.org/schema/integration/mongodb/spring-integration-mongodb.xsd
+">
+    <channel id="replyChannel">
+        <interceptors>
+            <wire-tap channel="fullLogger"/>
+        </interceptors>
+    </channel>
     <http:inbound-gateway
             id="httpIndexGateway"
             request-channel="httpIndexChannel"
             path="/"
             view-name="index"
+            reply-channel="replyChannel"
     />
-    <channel id="httpIndexChannel">
-        <!--<interceptors>
-           <wire-tap channel="fullLogger"/>
-       </interceptors>-->
-    </channel>
-    <transformer id="startModelTransformer" expression="new java.util.HashMap()" input-channel="httpIndexChannel" output-channel="testTransformerChannel"/>
-    <channel id="testTransformerChannel"/>
-    <transformer id="insertRegistryItemsTransformer" input-channel="testTransformerChannel" ref="registryItemsEnricher"/>
+    <channel id="httpIndexChannel"/>
 
-<!--    <logging-channel-adapter id="fullLogger" level="DEBUG" log-full-message="true"/>-->
+    <chain id="registryItemsChain" input-channel="httpIndexChannel" output-channel="buildResponsePayloadChannel">
+        <mongo:outbound-gateway
+                id="fetchRegistryItemsGateway"
+                collection-name="registry-items"
+                query="{}"
+                entity-class="org.mhgerov.weddingpage.orm.RegistryItem"
+        />
+        <header-enricher id="registryItemsHeaderEnricher" >
+            <header name="registryList" expression="payload"/>
+        </header-enricher>
+    </chain>
+
+    <channel id="buildResponsePayloadChannel"/>
+    <chain id="responseBuilderChain" input-channel="buildResponsePayloadChannel" output-channel="replyChannel">
+        <transformer expression="new java.util.HashMap()"/>
+        <enricher>
+            <property name="registryList" expression="headers['registryList']"/>
+        </enricher>
+    </chain>
+
+
+
+
+
+    <logging-channel-adapter id="fullLogger" level="DEBUG" log-full-message="true"/>
 
 
 </beans:beans>
