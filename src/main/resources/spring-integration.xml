@@ -3,15 +3,15 @@
        xmlns="http://www.springframework.org/schema/integration"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:http="http://www.springframework.org/schema/integration/http"
-       xmlns:mongo="http://www.springframework.org/schema/integration/mongodb"
+             xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/integration
             https://www.springframework.org/schema/integration/spring-integration.xsd
             http://www.springframework.org/schema/integration/http
             https://www.springframework.org/schema/integration/http/spring-integration-http.xsd
-            http://www.springframework.org/schema/integration/mongodb
-            https://www.springframework.org/schema/integration/mongodb/spring-integration-mongodb.xsd
+            http://www.springframework.org/schema/util
+            https://www.springframework.org/schema/util/spring-util.xsd
 ">
     <http:inbound-gateway
             id="httpIndexGateway"
@@ -21,31 +21,19 @@
     />
     <channel id="httpIndexChannel"/>
 
-    <chain id="registryItemsChain" input-channel="httpIndexChannel" output-channel="buildResponsePayloadChannel">
-        <mongo:outbound-gateway
-                id="fetchRegistryItemsGateway"
-                collection-name="registry-items"
-                query="{}"
-                entity-class="org.mhgerov.weddingpage.orm.RegistryItem"
-        />
-        <header-enricher id="registryItemsHeaderEnricher" >
-            <header name="registryList" expression="payload"/>
-        </header-enricher>
-    </chain>
 
     <channel id="buildResponsePayloadChannel"/>
-    <chain id="responseBuilderChain" input-channel="buildResponsePayloadChannel">
+    <chain id="responseBuilderChain" input-channel="httpIndexChannel">
         <transformer expression="new java.util.HashMap()"/>
         <enricher>
-            <property name="registryList" expression="headers['registryList']"/>
+            <property name="registryList" expression="@registryList"/>
         </enricher>
     </chain>
-
-
-
-
-
 <!--    <logging-channel-adapter id="fullLogger" level="DEBUG" log-full-message="true"/>-->
 
+    <util:list id="registryList" value-type="org.mhgerov.weddingpage.orm.RegistryItem">
+        <beans:value >#{new org.mhgerov.weddingpage.orm.RegistryItem('registry_grill.jpg','Gas Grill','For hosting our favorite donaters!','https://paypal.me/pools/c/8gRIg5krKw')}</beans:value>
+        <beans:value >#{new org.mhgerov.weddingpage.orm.RegistryItem('registry_cat.jpg','A THIRD Cat!','Kitty &amp; Beaker need a new friend...','')}</beans:value>
+    </util:list>
 
 </beans:beans>
