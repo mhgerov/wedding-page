@@ -13,17 +13,11 @@
             http://www.springframework.org/schema/integration/mongodb
             https://www.springframework.org/schema/integration/mongodb/spring-integration-mongodb.xsd
 ">
-    <channel id="replyChannel">
-        <interceptors>
-            <wire-tap channel="fullLogger"/>
-        </interceptors>
-    </channel>
     <http:inbound-gateway
             id="httpIndexGateway"
             request-channel="httpIndexChannel"
             path="/"
             view-name="index"
-            reply-channel="replyChannel"
     />
     <channel id="httpIndexChannel"/>
 
@@ -40,7 +34,7 @@
     </chain>
 
     <channel id="buildResponsePayloadChannel"/>
-    <chain id="responseBuilderChain" input-channel="buildResponsePayloadChannel" output-channel="replyChannel">
+    <chain id="responseBuilderChain" input-channel="buildResponsePayloadChannel">
         <transformer expression="new java.util.HashMap()"/>
         <enricher>
             <property name="registryList" expression="headers['registryList']"/>
@@ -51,7 +45,7 @@
 
 
 
-    <logging-channel-adapter id="fullLogger" level="DEBUG" log-full-message="true"/>
+<!--    <logging-channel-adapter id="fullLogger" level="DEBUG" log-full-message="true"/>-->
 
 
 </beans:beans>
