@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
-       xmlns="http://www.springframework.org/schema/integration"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:http="http://www.springframework.org/schema/integration/http"
+             xmlns="http://www.springframework.org/schema/integration"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:http="http://www.springframework.org/schema/integration/http"
              xmlns:util="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/integration
             https://www.springframework.org/schema/integration/spring-integration.xsd
@@ -20,20 +20,17 @@
             view-name="index"
     />
     <channel id="httpIndexChannel"/>
-
-
-    <channel id="buildResponsePayloadChannel"/>
     <chain id="responseBuilderChain" input-channel="httpIndexChannel">
         <transformer expression="new java.util.HashMap()"/>
         <enricher>
             <property name="registryList" expression="@registryList"/>
         </enricher>
     </chain>
-<!--    <logging-channel-adapter id="fullLogger" level="DEBUG" log-full-message="true"/>-->
+    <!--    <logging-channel-adapter id="fullLogger" level="DEBUG" log-full-message="true"/>-->
 
     <util:list id="registryList" value-type="org.mhgerov.weddingpage.orm.RegistryItem">
-        <beans:value >#{new org.mhgerov.weddingpage.orm.RegistryItem('registry_grill.jpg','Gas Grill','For hosting our favorite donaters!','https://paypal.me/pools/c/8gRIg5krKw')}</beans:value>
-        <beans:value >#{new org.mhgerov.weddingpage.orm.RegistryItem('registry_cat.jpg','A THIRD Cat!','Kitty &amp; Beaker need a new friend...','')}</beans:value>
+        <beans:value>#{new org.mhgerov.weddingpage.orm.RegistryItem('registry_grill.jpg','Gas Grill','For hosting our favorite donaters!','https://paypal.me/pools/c/8gRIg5krKw')}</beans:value>
+        <beans:value>#{new org.mhgerov.weddingpage.orm.RegistryItem('registry_cat.jpg','A THIRD Cat!','Kitty &amp; Beaker need a new friend...','')}</beans:value>
     </util:list>
 
 </beans:beans>
