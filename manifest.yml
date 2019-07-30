@@ -1,5 +1,7 @@
 ---
 applications:
   - name: mizzy-wedding
-    memory: 512M
     buildpacks: [java_buildpack]
+    memory: 1G
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ }}'
